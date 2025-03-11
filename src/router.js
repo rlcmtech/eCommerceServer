@@ -6,7 +6,7 @@ const products = require('./models/addProducModel')
 
 
 
-router.use('/', signup);
+router.use('/signup', signup);
 router.use('/', products)
 
 module.exports = router;
