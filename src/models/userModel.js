@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const accountSchema = new mongoose.Schema({  // Added 'new mongoose.Schema'
+const userSchema = new mongoose.Schema({  // Added 'new mongoose.Schema'
   isAdmin: {
     type: Boolean,
     default: false,
@@ -18,6 +18,12 @@ const accountSchema = new mongoose.Schema({  // Added 'new mongoose.Schema'
     required: true,
     unique: true, 
   },
+
+password: {
+  type: string,
+  required: true,
+},
+
   number: {
     type: Number,
     required: false,
@@ -42,6 +48,6 @@ const accountSchema = new mongoose.Schema({  // Added 'new mongoose.Schema'
   }
 }, { timestamps: true, versionKey: false });
 
-const Account = mongoose.model('Account', accountSchema);
+const User = mongoose.model('User', userSchema);
 
-module.exports = Account;
+module.exports = User;

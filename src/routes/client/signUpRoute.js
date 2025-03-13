@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Account = require('../../models/signUpModel')
+const User = require('../../models/userModel')
 
 router.post('/', async (req, res) => {
 
@@ -20,10 +20,10 @@ if (!street || !brgy || !city || !province ) {
 
 
 
- const newAccount = new Account({ isAdmin, firstName, lastName, email, number, address: { street, brgy, city, province},
+ const newUser = new User({ isAdmin, firstName, lastName, email, number, address: { street, brgy, city, province},
  })
 
-await newAccount.save();
+await newUser.save();
 res.status(201).json({ message: "Account successfully created." });
 
 } catch (error) {
