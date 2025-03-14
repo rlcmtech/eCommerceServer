@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../../models/userModel')
+const jwt = require('jsonwebtoken');
+const User = require('../../models/userModel');
+const nodemailer = require('nodemailer');
 
 router.post('/', async (req, res) => {
 
 try {
- const { isAdmin, firstName, lastName, email, number, address } = req.body;
+ const { isAdmin, firstName, lastName, email, isVerified, password, number, address } = req.body;
 
- if ( !firstName || !lastName || !email || !number || !address ) { 
+ if ( !firstName || !lastName || !email || !number || password || !address ) { 
     return res.status(400).json({ message: "Please complete your profile details."})
  }
 

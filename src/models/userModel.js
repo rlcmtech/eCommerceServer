@@ -18,10 +18,13 @@ const userSchema = new mongoose.Schema({  // Added 'new mongoose.Schema'
     required: true,
     unique: true, 
   },
-
 password: {
   type: string,
   required: true,
+},
+isVerified: {
+  type: Boolean,
+    default: false, 
 },
 
   number: {
