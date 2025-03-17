@@ -22,11 +22,6 @@ password: {
   type: string,
   required: true,
 },
-isVerified: {
-  type: Boolean,
-    default: false, 
-},
-
   number: {
     type: Number,
     required: false,
@@ -47,6 +42,10 @@ isVerified: {
     province: {
       type: String,
       required: true,
+    },
+    isVerified: {
+      type: Boolean,
+        default: false, 
     },
   }
 }, { timestamps: true, versionKey: false });
