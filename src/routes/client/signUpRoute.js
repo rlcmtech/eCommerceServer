@@ -51,16 +51,31 @@ const token = jwt.sign({ userId: newUser._id }, jwtSecret, { expiresIn: '1h' });
 const transporter = nodemailer.createTransport({
 service: 'gmail',
 auth:{
-    
+    user: emailUser,
+    pass: emailPassword,
 }
 
 });
 
+const verificationLink = `http://localhost:8001/verify?token=${token}`; // change this according to production / host
 
+const verificationEmailContent = {
+from: emailUser,
+to: newUser.email,
+Subject: 'Please verify your email', 
+html: `
+<h1>Verification Link</h1>
+<p>Please click the email below to vefivy your email:</p>
+<a href = "${verificationLink}">Verification Link</a>
 
+`,
+};
 
+// this block sends the email:
 
+await transporter.sendMail(verificationEmailContent)
 
+res.status(201).json({message: 'Account created, Please verify your email. Check your email to access the verification link.'});
 
 
 } catch (error) {
