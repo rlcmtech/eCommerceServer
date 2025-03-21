@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 
 const emailUser = process.env.EMAIL_USER;
 const emailPassword = process.env.EMAIL_PASS;
-const jwtSecret = process.env.JWT_Secret;
+const jwtSecret = process.env.JWT_SECRET;
 
 
 router.post('/', async (req, res) => {
@@ -37,7 +37,7 @@ if (existingUser) {
 const hashedPassword = await bcrypt.hash(password, 10);
 
 //creates a new user:
- const newUser = new User({ isAdmin, firstName, lastName, email, number, address: { street, brgy, city, province}, isVerified: false,
+ const newUser = new User({ isAdmin, firstName, lastName, email, password: hashedPassword, number, address: { street, brgy, city, province}, isVerified: false,
  });
 
 await newUser.save();
