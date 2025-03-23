@@ -52,11 +52,13 @@ router.post('/', async (req, res) => {
 
     // Prepare verification email
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.gmail.com',        // Gmail SMTP server
+      port: 465,                      // Secure port
+      secure: true,                   // Use TLS
       auth: {
-        user: EMAIL_USER,
-        pass: EMAIL_PASS,
-      },
+        user: process.env.EMAIL_USER,  // Your email
+        pass: process.env.EMAIL_PASS   // App password
+      }
     });
 
     const verificationLink = `http://localhost:3000/verify?token=${token}`; // Replace with your domain in production
