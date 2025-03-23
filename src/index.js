@@ -18,9 +18,14 @@ app.use(morgan('tiny'));
 app.use(router);
 
 // MongoDB Connection and Server Start
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {})
   .then(() => {
     console.log('✅ Successfully connected to MongoDB');
-    app.listen(8001, () => console.log('🚀 Server running on Port 8001'));
+
+    const PORT = process.env.PORT || 8001;
+    app.listen(PORT, () => console.log(`🚀 Server running on Port ${PORT}`));
   })
-  .catch((err) => console.error('❌ Error connected to MongoDB:', err.message));
+  .catch((err) => {
+    console.error('❌ Error connecting to MongoDB:', err.message);
+    process.exit(1);
+  });

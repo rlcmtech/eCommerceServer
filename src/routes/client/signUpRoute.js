@@ -1,10 +1,11 @@
 const express = require('express');
+const dotenv = require('dotenv');
+dotenv.config();
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../../models/userModel');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
-
 
 const emailUser = process.env.EMAIL_USER;
 const emailPassword = process.env.EMAIL_PASS;
@@ -41,7 +42,7 @@ const hashedPassword = await bcrypt.hash(password, 10);
  });
 
 await newUser.save();
-res.status(201).json({ message: "Account successfully created." });
+
 
 
 // Generates token: 
