@@ -18,11 +18,13 @@ description: {
 
 contains: {
 type: String,
+required: true,
 }, 
 
-isAvailable: {
-    type: Boolean, 
-    default: true,
+stocksAvailable: {
+    type: Number, 
+    required: true,
+    
 },
 }, { timestamps: true, versionKey: false });
 
