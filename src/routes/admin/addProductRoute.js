@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../../models/productModel.js');
+const auth = require('../../middleware/auth');
 
-router.post('/admin/products', async(req, res) => {
+router.post('/', auth, async(req, res) => {
    
 try {
 const { name, price, description, contains, stocksAvailable } = req.body;
