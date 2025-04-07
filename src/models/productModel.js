@@ -23,9 +23,21 @@ required: true,
 
 stocksAvailable: {
     type: Number, 
+    default: 10,
     required: true,
-    
 },
+
+addedBy: {
+    type: String, 
+    default: 'System'
+},
+
+updatedBy: {
+    type: String, 
+    default: null,
+},
+
+
 }, { timestamps: true, versionKey: false });
 
 const Product = mongoose.model("Product", productSchema);
