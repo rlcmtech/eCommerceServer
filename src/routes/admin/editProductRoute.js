@@ -24,7 +24,7 @@ res.status(200).json({ message: 'Product updated', product: updateProduct });
 
 } catch (error) {
     
-    res.status(500).json({ message: 'Internal Server erro, please contact the dev.', error: error.message });
+    res.status(500).json({ message: 'Internal Server error, please contact the dev.', error: error.message });
 
 }
 
