@@ -29,14 +29,17 @@ stocksAvailable: {
 
 addedBy: {
     type: String, 
-    default: 'System'
+    default: "System",
+  
+   
 },
 
 updatedBy: {
     type: String, 
-    default: null,
-},
-
+    default: "System",
+  
+   
+}
 
 }, { timestamps: true, versionKey: false });
 

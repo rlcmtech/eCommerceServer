@@ -11,9 +11,10 @@ const { name, price, description, contains, stocksAvailable } = req.body;
 
 const updateProduct = await product.findByIdAndUpdate(
     { _id: id },
-    { $set: { name, price, description, contains, stocksAvailable, updatedBy: req.user.email, } },
+    { $set: { name, price, description, contains, stocksAvailable, updatedBy: req.user.email } },
     { new: true, runValidators: true }
-) ;
+  );
+
 
 if (!updateProduct) {
     return res.status(400).json({ message: 'Product not found.' });

@@ -21,7 +21,8 @@ try {
     req.user ={ 
         userId: decoded.userId,
         firstName: decoded.firstName,
-        isAdmin: decoded.isAdmin
+        isAdmin: decoded.isAdmin,
+        email: decoded.email
 };
 
 next();

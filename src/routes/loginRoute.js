@@ -23,6 +23,7 @@ const userLogin = async (req, res) => {
     const token = jwt.sign({
       userId: user.id,
       firstName: user.firstName,
+      email: user.email,
       isAdmin: user.isAdmin ?? false, // Ensure isAdmin is included
     }, process.env.SECRET_KEY, {
       expiresIn: '4h',
