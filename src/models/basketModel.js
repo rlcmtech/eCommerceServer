@@ -17,6 +17,14 @@ const basketItemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  orderStatus: { 
+    type: String,
+    enum: ['pending', 'paid', 'processing', 'completed', 'canceled', 'refunded', 'others'],
+    default: 'pending',
+  },
+  remarks: {
+  type: String,
+  required: false }
 }, { id: false });
 
 const custBasketSchema = new mongoose.Schema({
