@@ -12,7 +12,7 @@ const deleteProduct = require('./routes/admin/deleteProductRoute.js');
 const displayProducts = require('./routes/admin/displayProductsRoute.js');
 
 const addOrder = require('./routes/client/addOrdersRoute');
-const editOrder = require('./routes/client/updateOrdersRoute');
+const updateOrder = require('./routes/client/updateOrdersRoute');
 const deleteOrder = require('./routes/client/deleteOrdersRoute');
 const displayOrder = require('./routes/client/displayOrdersRoute.js');
 
@@ -28,7 +28,7 @@ router.use('/admin/products', auth, adminAuth, displayProducts);
 // customer routes
 router.use('/signup', signup);
 router.use('/customer/basket/addorder', auth, addOrder);
-router.use('/customer/basket/updateorder', auth, editOrder);
+router.use('/customer/basket/updateorder', auth, updateOrder);
 router.use('/customer/basket/deleteorder', auth, deleteOrder);
 router.use('/customer/basket/displayorder', auth, displayOrder);
 

@@ -5,37 +5,43 @@ const CustBasket = require('../../models/basketModel');
 const Product = require('../../models/productModel');
 
 router.put('/', auth, async (req, res) => {
-const { orderName, newOrderQuantity } = req.body;
+  const { orderName, newOrderQuantity } = req.body;
 
-if (!orderName || !newOrderQuantity) {
-    return res.status(400).json({ message: "Please update your order to proceed." });
-}
+  // Check for valid input
+  if (!orderName || typeof newOrderQuantity !== 'number' || newOrderQuantity <= 0) {
+    return res.status(400).json({ message: "Invalid order update." });
+  }
 
-const basket = await CustBasket.findOne({ userId: req.user._id });
+  // Fix: use req.user.userId instead of req.user._id
+  const basket = await CustBasket.findOne({ userId: req.user.userId });
 
-if (!basket) {
-return res.status(404).json({ message:"Basket not found" });
-}
+  if (!basket) {
+    return res.status(404).json({ message: "Basket not found" });
+  }
 
-// find the item inside the basket array: 
+  // Find the item in the basket
+  const item = basket.basket.find(item => item.orderName === orderName);
 
-const item = basket.basket.find(item => item.orderName === orderName);
-
-if (!item) {
+  if (!item) {
     return res.status(404).json({ message: "Item not found in the basket" });
-}
+  }
 
-// update price and total block
-item.orderQuantity = newOrderQuantity;
-item.totalOrderPrice = item.orderPrice * newOrderQuantity;
+  // Update quantity and total order price
+  item.orderQuantity = newOrderQuantity;
+  item.totalOrderPrice = item.orderPrice * newOrderQuantity;
 
-// update total price block
-basket.totalOrderPrice = basket.basket.reduce((total, item) => total = item.totalOrderPrice, basket.deliveryCharge);
+  // Fix: Use totalPrice (not totalOrderPrice) and proper reduce logic
+  basket.totalPrice = basket.basket.reduce(
+    (total, item) => total + item.totalOrderPrice,
+    basket.deliveryCharge
+  );
 
-await basket.save();
+  await basket.save();
 
-res.status(200).json({ message: "Your orders have been updated successfully", basket }); 
-
-})
+  res.status(200).json({
+    message: "Your orders have been updated successfully",
+    basket
+  });
+});
 
 module.exports = router;
