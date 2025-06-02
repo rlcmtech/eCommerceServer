@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/auth');
+const isLoggedin = require('../../middleware/isLoggedin');
+const isVerified = require('../../middleware/isVerified');
 const CustBasket = require('../../models/basketModel');
 const Product = require('../../models/productModel');
 
-router.get('/', auth, async (req, res) => {
+router.get('/', isLoggedin, isVerified, async (req, res) => {
 
 try {
 const basket = await CustBasket.findOne({ userId: req.user.userId });

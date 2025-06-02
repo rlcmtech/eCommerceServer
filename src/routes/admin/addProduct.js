@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../../models/productModel.js');
-const auth = require('../../middleware/auth');
+const isLoggedin = require('../../middleware/isLoggedin');
+const isVerified = require('../../middleware/isVerified');
+const isAdmin = require('../../middleware/isAdmin.js')
 
-router.post('/', auth, async(req, res) => {
+router.post('/', isLoggedin, isVerified, isAdmin, async(req, res) => {
    
 try {
 

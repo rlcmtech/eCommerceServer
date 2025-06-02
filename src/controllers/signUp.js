@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const User = require('../../models/userModel');
+const User = require('../models/userModel');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
 
@@ -47,6 +47,7 @@ await newUser.save();
 
 // Generates token: 
 const token = jwt.sign({ userId: newUser._id }, jwtSecret, { expiresIn: '1h' });
+console.log("🔐 Email Verification Token:", token);
 
 //verification email: 
 const transporter = nodemailer.createTransport({

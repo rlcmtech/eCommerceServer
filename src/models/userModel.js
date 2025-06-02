@@ -43,11 +43,12 @@ password: {
       type: String,
       required: true,
     },
-    isVerified: {
-      type: Boolean,
-        default: false, 
-    },
-  }
+    
+  },
+  isVerified: {
+    type: Boolean,
+      default: false, 
+  },
 }, { timestamps: true, versionKey: false });
 
 const User = mongoose.model('User', userSchema);

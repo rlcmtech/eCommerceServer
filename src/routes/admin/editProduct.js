@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const product = require('../../models/productModel');
-const auth = require('../../middleware/auth');
+const isLoggedin = require('../../middleware/isLoggedin');
+const isVerified = require('../../middleware/isVerified');
+const isAdmin = require('../../middleware/isAdmin.js')
 
-router.patch('/:id', auth, async (req, res) => {
+router.patch('/:id', isLoggedin, isVerified, isAdmin, async (req, res) => {
 
 try {
 const { id } = req.params

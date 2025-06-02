@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/auth');
+const isLoggedin = require('../../middleware/isLoggedin');
+const isVerified = require('../../middleware/isVerified');
 const CustBasket = require('../../models/basketModel');
 const Product = require('../../models/productModel');
 
-router.post('/', auth, async (req, res) => {
+
+router.post('/', isLoggedin, isVerified, async (req, res) => {
   try {
     const { productId, orderQuantity } = req.body;
 

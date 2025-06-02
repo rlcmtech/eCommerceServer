@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/auth');
+const isLoggedin = require('../../middleware/isLoggedin');
+const isVerified = require('../../middleware/isVerified');
 const CustBasket = require('../../models/basketModel');
 const Product = require('../../models/productModel');
 
-router.put('/', auth, async (req, res) => {
+router.put('/', isLoggedin, isVerified, async (req, res) => {
   const { orderName, newOrderQuantity } = req.body;
 
   // Check for valid input
