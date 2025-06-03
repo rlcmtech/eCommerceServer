@@ -38,6 +38,9 @@ return res.status(200).json({ message: "This account is already verfied." })
 
 user.isVerified = true;
 await user.save();
+// need to add message here: 
+return res.status(200).json({ message:'Account successfully verified' })
+
 
 // Check via console log: 
 console.log('Account is now verified:', {
