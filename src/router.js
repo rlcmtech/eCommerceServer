@@ -7,9 +7,9 @@ const isVerified = require('./middleware/isVerified.js');
 const verifyEmail = require('./controllers/verifyEmail.js')
 const resetPassword = require('./controllers/resetPassword.js');
 const sendResetPasswordEmail = require('./controllers/sendResetPasswordEmail.js');
+const sendEmailVerificationEmail = require('./controllers/sendVerificationEmail.js');
 const isLoggedin = require('./middleware/isLoggedin.js');
 const isAdmin = require('./middleware/isAdmin.js');
-
 
 const addProduct = require('./routes/admin/addProduct.js');
 const editProduct = require('./routes/admin/editProduct.js');
@@ -21,20 +21,21 @@ const updateOrder = require('./routes/client/updateOrders.js');
 const deleteOrder = require('./routes/client/deleteOrders.js');
 const displayOrder = require('./routes/client/displayOrders.js');
 
-
-
+// controllers
+router.use('/signup', signup);
+router.use('/login', login);
+router.use('/user/verify', verifyEmail);
+router.use('/user/resetpassword', resetPassword );
+router.use('/user/emailrequest/verifyemail', isLoggedin, sendEmailVerificationEmail);
+router.use('/user/emailrequest/resetpassword', isLoggedin, sendResetPasswordEmail);
 
 // admin routes
-
-router.use('/login', login)
 router.use('/admin/products', isLoggedin, isVerified, isAdmin, addProduct);
 router.use('/admin/products', isLoggedin, isVerified, isAdmin, editProduct);
 router.use('/admin/products', isLoggedin, isVerified, isAdmin, deleteProduct);
 router.use('/admin/products', isLoggedin, isVerified, isAdmin, displayProducts);
 
 // customer routes
-router.use('/verify', verifyEmail);
-router.use('/signup', signup);
 router.use('/customer/resetpassword', isLoggedin, isVerified, resetPassword);
 router.use('/customer/basket/addorder', isLoggedin, isVerified, addOrder);
 router.use('/customer/basket/updateorder', isLoggedin, isVerified, updateOrder);
