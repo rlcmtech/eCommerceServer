@@ -21,7 +21,7 @@ const userLogin = async (req, res) => {
 
     // Generate JWT with user data and include isAdmin
     const token = jwt.sign({
-      userId: user.userId,
+      userId: user._id,
       firstName: user.firstName,
       email: user.email,
       isAdmin: user.isAdmin ?? false, // Ensure isAdmin is included
