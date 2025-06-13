@@ -4,9 +4,10 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const User = require('../models/userModel');
 
-const secretKey = process.env.SECRET_KEY; // Used for both login & email tokens
-const FEverifyEmailURL = process.env.FRONTEND_VERIFY_URL; // e.g., http://localhost:3000/verify
 
+
+const jwtSecret = process.env.JWT_SECRET;
+const FEverifyEmailURL = process.env.FRONTEND_VERIFY_URL; 
 // Setup mail transporter
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -31,7 +32,7 @@ router.get('/', async (req, res) => {
     // Step 2: Verify the token
     let decoded;
     try {
-      decoded = jwt.verify(loginToken, secretKey);
+      decoded = jwt.verify(loginToken, jwtSecret);
       console.log('Decoded login token:', decoded);
     } catch (err) {
       return res.status(401).json({ message: 'Invalid or expired token.' });
@@ -51,7 +52,7 @@ router.get('/', async (req, res) => {
     // Step 5: Create a short-lived token for email verification
     const emailVerifyToken = jwt.sign(
       { userId: user._id },
-      secretKey,
+      jwtSecret,
       { expiresIn: '20m' }
     );
 

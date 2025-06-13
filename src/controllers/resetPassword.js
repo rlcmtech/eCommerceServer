@@ -9,36 +9,26 @@ const jwtSecret = process.env.JWT_SECRET;
 router.post('/', async (req, res) => {
     const { token, newPassword } = req.body;
 
-    if (!token || !newPassword) {
-        return res.status(400).json({ message: "Token and new password are required." });
-    }
+try {
+const decoded = jwt.verify(token, jwtSecret)
+const user = await User.findById(decoded.userId);
 
-    try {
-        // Verify the token
-        const decoded = jwt.verify(token, jwtSecret);
-        const userId = decoded.userId;
+if (!user) {
+return res.status(404).json({ message: 'User not found' });
+}
 
-        // Find user by ID 
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ message: "User not found." });
-        }
+const hashedPassword = await bcrypt.hash(newPassword, 10);
+user.password = hashedPassword;
+await user.save();
 
-        // Hash the new password
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+res.json({ message: 'Password has been reset successfully' })
 
-        // Save the new password
-        user.password = hashedPassword;
-        await user.save();
 
-        // Send success response (res.sendStatus can't be chained with .json)
-        res.status(200).json({ message: "Password reset successfully." });
+} catch (err) {
 
-    } catch (error) {
-        console.error("Error resetting password:", error);
-        res.status(400).json({ message: "Invalid or expired token.", error: error.message });
-    }
+console.error('Reset error:', err);
+res.status(400).json({ message: 'Invalid or expired token.' })
+}
 });
 
 module.exports = router;

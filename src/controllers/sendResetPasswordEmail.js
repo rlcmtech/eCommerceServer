@@ -15,76 +15,53 @@ auth: {
 },
 });
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
 
 try {
 
-// get the token 
-const authHeader = req.headers.authorization;
-if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: "No token was provided. Cannot reset the password."  });
-}
+const { email } = req.body;   
+const user = await User.findOne({ email });
 
-const loginToken = authHeader.split(' ')[1];
-
-// verify the token
-
-
-let decoded;
-try { 
-    decoded = jwt.verify(loginToken, jwtSecret);
-} catch (err) {
-    return res.status(401).json({ message: 'Invalid or expired token' });
-}
-
-// Find the user via userId
-
-const user = await User.findById(decoded.userId);
 
 if (!user) {
-    return res.status(404).json({ message: 'User not found' })
+    return res.status(404).json({ message: "User is not found from the database" })
 }
 
-// If user is not verified, do not process
-if (!user.isVerified) {
-return res.status(403).json({ message: 'Please verify your email before changing the password.' })    
-}
+const resetPasswordToken = jwt.sign(
+    { userId: user._id },
+    jwtSecret,
+    { expiresIn: '30m' }
+);
 
-// Generate a token for reset password: --- check schema
-const resetToken = jwt.sign(
-   { id: user._id },
-   jwtSecret,
-   { expiresIn: '20m' } 
-)
-
-const passwordResetURL = `${FRONTEND_RESET_URL}?token=${resetToken}`
+// View the token in terminal for testing
+console.log('Reset Token:', resetPasswordToken);
 
 
 
-// Send reset password email with the link
+
+
+const resetPasswordURL = `${FEresetPasswordURL}?token=${resetPasswordToken}`
 
 const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: user.email,
-    subject: 'Change Password Email',
-    html: `
-    Hello ${user.firstName} ${user.lastName} Here is the email to change your password. Please use the link provided to change your password: 
-     <a href="${passwordResetURL}">${passwordResetURL}</a>
-this email will expire in 20 mins
-    `
-}
+from: process.env.EMAIL_USER,
+to: user.email,
+subject: 'Reset your password',
+html: `
+    <p>Hello ${user.firstName} ${user.lastName},</p>
+        <p>Click the link below to reset your password. This link will expire in 30 minutes:</p>
+        <a href="${resetPasswordURL}">${resetPasswordURL}</a>
+      `
+    };
 
-await transporter.sendMail(mailOptions)
-res.json({ message: 'Change password email sent' })
+await transporter.sendMail(mailOptions);
 
-// the email will contain a token that will allow the user to change the password. the token is only valid for 20 minutes. 
+res.json ({ message: 'Reset email was send. Please check your email. If it is not in your inbox, please check your spam' })
 
-// basically, this code does not do a change password function but will only trigger a user to receive an email that will nroing them to the change password page (via link)
 
 } catch (error) {
-    console.error 
-       console.error('Error sending change password email', error);
-       res.status(500).json({ message: 'Internal Server error, please contact your devs' }); 
+console.error('error in sending reset password email', error);
+res.status(500).json({ message: 'internal server error, please contact the dev.' })    
+  
 }
 
 });
