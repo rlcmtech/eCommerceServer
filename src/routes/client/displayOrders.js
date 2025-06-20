@@ -8,7 +8,7 @@ const Product = require('../../models/productModel');
 router.get('/', isLoggedin, isVerified, async (req, res) => {
 
 try {
-const basket = await CustBasket.findOne({ userId: req.user.userId });
+const basket = await CustBasket.findOne({ userId: req.user._id });
 
 if (!basket) {
 return res.status(404).json({ message: "Basket not found" });

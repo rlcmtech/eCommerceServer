@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const product = require('../../models/productModel');
-const isLoggedin = require('../../middleware/isLoggedin');
-const isVerified = require('../../middleware/isVerified');
+const product = require('../../models/productModel.js');
+const isLoggedin = require('../../middleware/isLoggedin.js');
+const isVerified = require('../../middleware/isVerified.js');
 const isAdmin = require('../../middleware/isAdmin.js')
 
 router.patch('/:id', isLoggedin, isVerified, isAdmin, async (req, res) => {

@@ -25,7 +25,7 @@ const userLogin = async (req, res) => {
       firstName: user.firstName,
       email: user.email,
       isAdmin: user.isAdmin ?? false, // Ensure isAdmin is included
-    }, process.env.SECRET_KEY, {
+    }, process.env.JWT_SECRET, {
       expiresIn: '4h',
     });
 

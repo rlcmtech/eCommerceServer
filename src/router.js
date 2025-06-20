@@ -12,7 +12,7 @@ const isLoggedin = require('./middleware/isLoggedin.js');
 const isAdmin = require('./middleware/isAdmin.js');
 
 const addProduct = require('./routes/admin/addProduct.js');
-const editProduct = require('./routes/admin/editProduct.js');
+const updateProduct = require('./routes/admin/updateProduct.js');
 const deleteProduct = require('./routes/admin/deleteProduct.js');
 const displayProducts = require('./routes/admin/displayProducts.js');
 
@@ -31,12 +31,11 @@ router.use('/user/emailrequest/resetpassword', isLoggedin, sendResetPasswordEmai
 
 // admin routes
 router.use('/admin/products', isLoggedin, isVerified, isAdmin, addProduct);
-router.use('/admin/products', isLoggedin, isVerified, isAdmin, editProduct);
+router.use('/admin/products', isLoggedin, isVerified, isAdmin, updateProduct);
 router.use('/admin/products', isLoggedin, isVerified, isAdmin, deleteProduct);
 router.use('/admin/products', isLoggedin, isVerified, isAdmin, displayProducts);
 
 // customer routes
-router.use('/customer/resetpassword', isLoggedin, isVerified, resetPassword);
 router.use('/customer/basket/addorder', isLoggedin, isVerified, addOrder);
 router.use('/customer/basket/updateorder', isLoggedin, isVerified, updateOrder);
 router.use('/customer/basket/deleteorder', isLoggedin, isVerified, deleteOrder);

@@ -1,0 +1,43 @@
+
+// sign up
+{
+  "isAdmin": true,
+  "firstName": "Luis",
+  "lastName": "Magtira",
+  "email": "magelsfoods@gmail.com",
+  "password": "Polvoron2025",
+  "number": 09057802975,
+  "address": {
+    "street": Dona Maria",
+    "brgy": "Tenejero",
+    "city": "Balanga",
+    "province": "Bataan"
+  }
+}
+
+// login
+{
+    "email" : "",
+    "password" : "Password123New"
+}
+
+// Add product: 
+{
+  "name": "Classic Polvoron Pack - 6s",
+  "price": 80,
+  "description": "A sweet and crumbly Filipino shortbread made from toasted flour, powdered milk, and butter.",
+  "contains": "Flour, Sugar, Milk, Butter",
+  "stocksAvailable": 100
+}
+
+// add order - if user is loggedin
+{
+  "productId": "665f4fdcf13b5b4e25e52b18",
+  "orderQuantity": 3
+}
+
+// update order 
+{
+  "productId": "6854f2dab6aa2dbcce6a4207",
+  "newOrderQuantity": 5
+}

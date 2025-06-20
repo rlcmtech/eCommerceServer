@@ -11,7 +11,7 @@ router.post('/', isLoggedin, isVerified, async (req, res) => {
     const { productId, orderQuantity } = req.body;
 
     // ✅ Ensure userId is available
-    if (!req.user || !req.user.userId) {  // Change .id to .userId
+    if (!req.user || !req.user._id) {  // Change .id to .userId
       return res.status(400).json({ message: "User ID is missing from the request." });
     }
 
@@ -37,11 +37,11 @@ router.post('/', isLoggedin, isVerified, async (req, res) => {
     const totalOrderPrice = orderPrice * orderQuantity;
 
     // ✅ Find or create basket
-    let basket = await CustBasket.findOne({ userId: req.user.userId });  // Change .id to .userId
+    let basket = await CustBasket.findOne({ userId: req.user._id });  // Change .id to .userId
 
     if (!basket) {
       basket = new CustBasket({
-        userId: req.user.userId,  // Use userId instead of id
+        userId: req.user._id,  // Use userId instead of id
         basket: [],
         deliveryCharge: 50,  // Default delivery charge
         totalPrice: 0
@@ -50,6 +50,7 @@ router.post('/', isLoggedin, isVerified, async (req, res) => {
 
     // ✅ Add order to basket
     basket.basket.push({
+      productId: product._id,
       orderName: product.name,
       orderQuantity,
       orderPrice,

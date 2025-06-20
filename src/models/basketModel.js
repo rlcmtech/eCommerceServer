@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const basketItemSchema = new mongoose.Schema({
+  productId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'Product'
+  },
   orderName: {
     type: String,
     required: true,
@@ -23,8 +28,9 @@ const basketItemSchema = new mongoose.Schema({
     default: 'pending',
   },
   remarks: {
-  type: String,
-  required: false }
+    type: String,
+    required: false
+  }
 }, { id: false });
 
 const custBasketSchema = new mongoose.Schema({
