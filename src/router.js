@@ -36,6 +36,7 @@ router.use('/admin/products', isLoggedin, isVerified, isAdmin, deleteProduct);
 router.use('/admin/products', isLoggedin, isVerified, isAdmin, displayProducts);
 
 // customer routes
+router.use('/customer/profile', isLoggedin, isVerified, isAdmin, );
 router.use('/customer/basket/addorder', isLoggedin, isVerified, addOrder);
 router.use('/customer/basket/updateorder', isLoggedin, isVerified, updateOrder);
 router.use('/customer/basket/deleteorder', isLoggedin, isVerified, deleteOrder);
