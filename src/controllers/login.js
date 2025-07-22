@@ -28,8 +28,15 @@ const userLogin = async (req, res) => {
     }, process.env.JWT_SECRET, {
       expiresIn: '4h',
     });
-
     console.log("Generated Token:", token); // Log the generated token to verify it's correct
+
+res.cookie('token', token, {
+httpOnly: true, 
+secure: process.env.NODE_ENV === 'production',
+sameSite: 'strict',
+maxAge: 4 * 60 * 60 * 1000,
+
+});
 
     return res.json({ token });
   } catch (error) {
