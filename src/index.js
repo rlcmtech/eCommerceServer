@@ -11,7 +11,10 @@ const app = express();
 
 // Middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // React frontend
+  credentials: true,               // allow cookies
+}));
 app.use(morgan('tiny'));
 
 // Routes

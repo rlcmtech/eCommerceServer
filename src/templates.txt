@@ -15,6 +15,27 @@
   }
 }
 
+
+
+---------  customer :
+{
+  "isAdmin": true,
+  "firstName": "Rick",
+  "lastName": "Customer",
+  "email": "sirluismagtira@gmail.com",
+  "password": "Polvoron2025",
+  "number": 9057802975,
+  "address": {
+    "street": "Dona Maria",
+    "brgy": "Tenejero",
+    "city": "Balanga",
+    "province": "Bataan"
+  }
+}
+
+
+
+
 // login
 {
     "email" : "",
